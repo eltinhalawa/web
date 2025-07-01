@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <style>
+        :root {
+            --primary-color: #ff9bb3;
+            --secondary-color: #ffd1dc;
+            --accent-color: #ff6b8b;
+            --text-color: #5a3d5c;
+            --light-bg: #fff5f7;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            background-image: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cfedfae1-1791-487d-99b7-a7b7f1d285b1.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .profile-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 70%;
+        }
+
+        section {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 202, 215, 0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 107, 139, 0.15);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .portfolio-item {
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255, 107, 139, 0.8), transparent);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .product-card {
+            text-align: center;
+        }
+
+        .product-image {
+            height: 180px;
+            width: 100%;
+            object-fit: contain;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .blog-post {
+            margin-bottom: 2rem;
+        }
+
+        .blog-post h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.4);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .social-icon i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            nav a {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="profile-container">
+            <img src="fotoprofil.jpg" alt="Female profile picture with pink background and cute smile" class="profile-pic">
+            <h1>Eltyn Halawa</h1>
+            <p class="tagline">Selamat Datang Di Webku</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#profile">Profile</a>
+            <a href="#about">About</a>
+            <a href="#blog">Blog</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#shop">Shop</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section id="profile">
+        <h2 class="section-title">My Profile</h2>
+        <div class="card">
+            <p>Hello! welcome to My Website.</p>
+            <ul>
+                <li><strong>Name:</strong> Eltin Rospitasari Halawa</li>
+                <li><strong>lokasi:</strong> Nias, Indonesia</li>
+                <li><strong>Hobi:</strong> Memasak, Dekor, Travelling</li>
+                <li><strong>Warna Favorit:</strong> Army, Pink</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">Tentang Saya</h2>
+        <div class="card">
+            <p>Hallo! Selamat datang di website pribadiku, jangan lupa di kepoin profilku yah.</p>
+            
+            <h3>Keahlian dan Skill</h3>
+            <p>Hallo! disini saya mem publikasikan skill dan keahlian.</p>
+            
+            <h3>Kepo yah Tentang Skill ku</h3>
+            <ul>
+                <li>Menjahit</li>
+                <li>Olshop</li>
+                <li>Codingan & Programing</li>
+                <li>Desainer</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="blog">
+        <h2 class="section-title">Bloger</h2>
+        
+        <div class="card blog-post">
+            <h3>Blog pertama</h3>
+            <p class="blog-date">Mey, 2025</p>
+            <p>Blog pertama saya adalah Membuat Website pribadi di ujian tengah semester bulan lalu...</p>
+        </div>
+        
+        <div class="card blog-post">
+            <h3>Bloger kedua</h3>
+            <p class="blog-date">July, 2025</p>
+            <p>Blog kedua saya adalah praktek membuat website pribadi mengunakan CSS...</p>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title">Portfolio</h2>
+        <div class="grid">
+            <div class="card portfolio-item">
+                <img src="fotoku.jpg" alt="Girl sitting on a swing surrounded by cherry blossoms at golden hour">
+                <div class="portfolio-overlay">
+                    <h3>Foto Sendiri</h3>
+                </div>
+            </div>
+            
+            <div class="card portfolio-item">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4b8111c6-974d-48be-9ae6-4f897815176d.png" alt="Digital illustration of cute anime-style girl with pink hair">
+                <div class="portfolio-overlay">
+                    <h3>Anime Ilustrasi</h3>
+                </div>
+            </div>
+            
+            <div class="card portfolio-item">
+                <img src="fotoself.jpg" alt="Flatlay of a pink vintage outfit with accessories and polaroid photos">
+                <div class="portfolio-overlay">
+                    <h3>Gabut Aja</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop">
+        <h2 class="section-title">Hasil Kreatif</h2>
+        <div class="grid">
+            <div class="card product-card">
+                <img src="olshop.jpg" alt="Pink canvas tote bag with cute floral embroidery" class="product-image">
+                <h3>Olshop</h3>
+                <p>Olshop Eltyn.</p>
+            </div>
+            
+            <div class="card product-card">
+                <img src="menjahit.jpg" alt="Set of three velvet scrunchies in pastel colors" class="product-image">
+                <h3>Desain Menjahit</h3>
+                <p>Ini adalah hasil desain menjahit, saya.</p>
+            </div>
+            
+            <div class="card product-card">
+                <img src="kursus.jpg" alt="Cute handwritten stickers with motivational quotes" class="product-image">
+                <h3>Kursus</h3>
+                <p>Menerima yang mau Kursus belajar menjahit.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="section-title">Galeri</h2>
+        <div class="grid">
+            <img src="fotosendiri.jpg" alt="Girl holding pink macarons against a pastel pink background" class="card">
+            <img src="fotokeluarga.jpg" alt="Books and coffee on a pink marble table with aesthetic arrangement" class="card">
+            <img src="fototeman.jpg" alt="Sunset at the beach with soft pink tones in the sky" class="card">
+            <img src="fotokampus.jpg" alt="Flatlay of skincare products with pink aesthetic arrangement" class="card">
+            <img src="kenangan.jpg" alt="Close-up portrait of girl with soft makeup and floral backgrounds" class="card">
+            <img src="temankos.jpg" alt="Minimalist workspace setup with pink accessories and laptop" class="card">
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Kontak saya</h2>
+        <div class="card">
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nama</label>
+                    <input type="text" id="name" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Pesan</label>
+                    <textarea id="message" rows="4" placeholder="Your message"></textarea>
+                </div>
+                
+                <button class="btn">Kirim</button>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://youtube.com/@eltinhalawa?si=ffYXGkihU4NT_9Lk" class="social-icon">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100070997360089" class="social-icon">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.tiktok.com/@eltynhalawa?_t=ZS-8xel8dW4Rbo&_r=1" class="social-icon">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Eltyn. Nias, Indonesia.</p>
+        <p>Made with 💖 from Nias Island</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission handler
+        const contactForm = document.querySelector('.contact-form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>
+
